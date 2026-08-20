@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Model } from './model';
+import { ModalTrigger } from './modal-trigger';
 
-describe('Model', () => {
-  let component: Model;
-  let fixture: ComponentFixture<Model>;
+describe('ModalTrigger', () => {
+  let component: ModalTrigger;
+  let fixture: ComponentFixture<ModalTrigger>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Model],
+      imports: [ModalTrigger],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Model);
+    fixture = TestBed.createComponent(ModalTrigger);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
