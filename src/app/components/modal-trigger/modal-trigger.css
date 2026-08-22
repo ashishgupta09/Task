@@ -1,0 +1,308 @@
+/* ── Container ───────────────────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.demo-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.demo-header h1 {
+  margin: 0;
+  color: #111827;
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* ── Demo Cards ──────────────────────────────────────────────────────────── */
+
+.demo-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Demo Card ───────────────────────────────────────────────────────────── */
+
+.demo-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 1rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.08),
+    0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.demo-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.08);
+}
+
+.demo-card h2 {
+  margin: 0 0 0.75rem;
+  color: #111827;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.demo-card p {
+  margin: 0 0 1rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ── Keyboard Shortcut ──────────────────────────────────────────────────── */
+
+.demo-card kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  padding: 0.125rem 0.375rem;
+  border: 1px solid #d1d5db;
+  border-bottom-width: 2px;
+  border-radius: 0.375rem;
+  background: #f9fafb;
+  color: #374151;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ── Size Tag ────────────────────────────────────────────────────────────── */
+
+.size-tag {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin-bottom: 1.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ── Open Modal Button ───────────────────────────────────────────────────── */
+
+.btm-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  margin-top: auto;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.625rem;
+  background: #3525cd;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.btm-button:hover {
+  background: #2d20b0;
+  box-shadow: 0 4px 10px rgba(53, 37, 205, 0.25);
+}
+
+.btm-button:active {
+  transform: translateY(1px);
+}
+
+.btm-button:focus-visible {
+  outline: 2px solid #3525cd;
+  outline-offset: 3px;
+}
+
+/* ── Modal Form ──────────────────────────────────────────────────────────── */
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #111827;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.form-group input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.625rem 0.875rem;
+  box-sizing: border-box;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  color: #111827;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.form-group input:hover {
+  border-color: #9ca3af;
+}
+
+.form-group input:focus {
+  border-color: #3525cd;
+  box-shadow: 0 0 0 3px rgba(53, 37, 205, 0.12);
+}
+
+/* ── Modal Action Buttons ────────────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0.625rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #3525cd;
+  outline-offset: 2px;
+}
+
+.btn-ghost {
+  border-color: #d1d5db;
+  background: #ffffff;
+  color: #374151;
+}
+
+.btn-ghost:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btn-primary {
+  background: #3525cd;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #2d20b0;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}
+
+/* ── Tablet ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .demo-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ── Mobile ──────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .demo-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-header h1 {
+    font-size: 1.625rem;
+  }
+
+  .demo-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .demo-card {
+    padding: 1.25rem;
+  }
+
+  .demo-card h2 {
+    font-size: 1.125rem;
+  }
+
+  .btm-button {
+    min-height: 46px;
+  }
+}
+
+/* ── Reduced Motion ──────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-card,
+  .btm-button,
+  .form-group input,
+  .btn {
+    transition: none;
+  }
+
+  .demo-card:hover {
+    transform: none;
+  }
+}

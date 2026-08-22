@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, ContentChild, HostListener, input, output, TemplateRef } from '@angular/core';
-import { NgTemplateOutlet } from "../../../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
-  imports: [NgTemplateOutlet],
+  imports: [CommonModule],
   selector: 'app-modal',
   styleUrl: './modal.css',
   templateUrl: './modal.html',

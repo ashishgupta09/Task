@@ -1,1 +1,115 @@
-<p>modal-trigger works!</p>
+<div class="container">
+  <header class="demo-header">
+    <h1>Reusable Modal Component</h1>
+  </header>
+
+  <div class="demo-cards">
+    <div class="demo-card">
+      <h2>Info Modal</h2>
+      <p>
+        Simple message with no footer. Close via <kbd>✕</kbd>, backdrop click, or <kbd>Esc</kbd>.
+      </p>
+      <span class="size-tag">size: sm</span>
+      <button class="btm-button" (click)="showInfo.set(true)">Show Info</button>
+    </div>
+    <div class="demo-card">
+      <h2>Confirm Modal</h2>
+      <p>
+        Simple message with no footer. Close via <kbd>✕</kbd>, backdrop click, or <kbd>Esc</kbd>.
+      </p>
+      <span class="size-tag">size: sm</span>
+      <button class="btm-button" (click)="showConfirm.set(true)">Show Confirm</button>
+    </div>
+    <div class="demo-card">
+      <h2>Form Modal</h2>
+      <p>
+        Simple message with no footer. Close via <kbd>✕</kbd>, backdrop click, or <kbd>Esc</kbd>.
+      </p>
+      <span class="size-tag">size: sm</span>
+      <button class="btm-button" (click)="showForm.set(true)">Show Form</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- 1. Info Modal — no footer                                             -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+
+  <app-modal [isOpen]="showInfo()" title="About the demo" size="sm" (closed)="showInfo.set(false)">
+    <ng-template #modalBody>
+      <p>
+        <code>app-modal</code> is a standalone reusable component that lives in
+        <code>core/components/modal</code>. Drop it in any feature and project your own content.
+      </p>
+      <ul>
+        <li>Angular 17+ <code>input()</code> / <code>output()</code> signals</li>
+        <li>Slots via <code>ng-template #modalBody</code> and <code>#modalFooter</code></li>
+        <li>Size variants: <code>sm</code> · <code>md</code> · <code>lg</code></li>
+        <li>Closes on backdrop, ✕ button, or <kbd>Esc</kbd></li>
+      </ul>
+    </ng-template>
+  </app-modal>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- 2. Confirm Modal                                                      -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <app-modal
+    [isOpen]="showConfirm()"
+    title="About the demo"
+    size="md"
+    (closed)="showConfirm.set(false)"
+  >
+    <ng-template #modalBody>
+      <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+    </ng-template>
+
+    <ng-template #modalFooter>
+      <button class="btn btn-ghost" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-danger" (click)="onConfirm()">Yes, Delete</button>
+    </ng-template>
+  </app-modal>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- 3. Form Modal                                                         -->
+  <!--                                                                       -->
+  <!-- Both inputs use [(ngModel)] — state lives in the component class so  -->
+  <!-- the footer's Submit button can call onFormSubmit() directly.          -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+
+  <app-modal
+    [isOpen]="showForm()"
+    ;
+    title="About the form"
+    size="lg"
+    (closed)="showForm.set(false)"
+  >
+    <ng-template #modalBody>
+      <div class="modal-form">
+        <div class="form-group">
+          <label for="modal-name">Full Name</label>
+          <input
+            id="modal-name"
+            type="text"
+            placeholder="Jane Doe"
+            [(ngModel)]="formName"
+            name="formName"
+          />
+        </div>
+        <div class="form-group">
+          <label for="modal-email">Email</label>
+          <input
+            id="modal-email"
+            type="email"
+            placeholder="jane@example.com"
+            [(ngModel)]="formEmail"
+            name="formEmail"
+          />
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+      <button class="btn btn-ghost" (click)="showForm.set(false)">Cancel</button>
+      <button class="btn btn-primary" (click)="onFormSubmit()">Submit</button>
+    </ng-template>
+  </app-modal>
+</div>
