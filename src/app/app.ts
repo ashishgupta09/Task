@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { ModalTrigger } from "./components/modal-trigger/modal-trigger";
+import { EmployeePage } from "./components/data-passing/employee-page/employee-page";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ModalTrigger],
+  imports: [CommonModule, EmployeePage],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

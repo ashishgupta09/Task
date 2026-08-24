@@ -1,0 +1,202 @@
+<form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()" class="employee-form">
+  <!-- ============================================= -->
+  <!-- Employee ID -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Employee ID </label>
+    <input type="number" formControlName="employeeId" readonly />
+  </div>
+
+  <!-- ============================================= -->
+  <!-- First Name -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> First Name </label>
+    <input type="text" formControlName="firstName" placeholder="Enter first name" />
+    @if (isInvalid('firstName')) {
+      <small> First name is required and must contain at least 2 characters. </small>
+    }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Last Name -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Last Name </label>
+    <input type="text" formControlName="lastName" placeholder="Enter last name" />
+    @if (isInvalid('lastName')) {
+      <small> Last name is required. </small>
+    }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Email -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Email </label>
+    <input type="email" formControlName="email" placeholder="Enter email" />
+    @if (isInvalid('email')) {
+      <small> Please enter a valid email. </small>
+    }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Phone -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Phone </label>
+    <input type="tel" formControlName="phone" placeholder="10 digit phone number" />
+    @if (isInvalid('phone')) {
+      <small> Phone number must contain 10 digits. </small>
+    }
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Department -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Department </label>
+    <select formControlName="department">
+      <option value="">Select department</option>
+      @for (department of departments(); track department) {
+        <option [value]="department">
+          {{ department }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Designation -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Designation </label>
+    <input type="text" formControlName="designation" placeholder="Enter designation" />
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Location -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Location </label>
+
+    <select formControlName="location">
+      <option value="">Select location</option>
+      @for (location of locations(); track location) {
+        <option [value]="location">
+          {{ location }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Joining Date -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Joining Date </label>
+    <input type="date" formControlName="joiningDate" />
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Employment Type -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Employment Type </label>
+    <select formControlName="employmentType">
+      <option value="">Select employment type</option>
+      @for (type of employmentTypes(); track type) {
+        <option [value]="type">
+          {{ type }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Manager -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Manager </label>
+
+    <select formControlName="manager">
+      <option value="">Select manager</option>
+      @for (manager of managers(); track manager) {
+        <option [value]="manager">
+          {{ manager }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Salary -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Salary </label>
+    <input type="number" formControlName="salary" placeholder="Enter salary" />
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Status -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Status </label>
+
+    <select formControlName="status">
+      @for (status of statuses(); track status) {
+        <option [value]="status">
+          {{ status }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Skills -->
+  <!-- ============================================= -->
+
+  <div>
+    <label> Skills </label>
+    <input
+      type="text"
+      [value]="skillsInput"
+      (input)="onSkillsChange($event)"
+      placeholder="Angular, RxJS, TypeScript"
+    />
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Remote -->
+  <!-- ============================================= -->
+
+  <div>
+    <label>
+      <input type="checkbox" formControlName="isRemote" />
+      Is Remote Employee
+    </label>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ACTIONS -->
+  <!-- ============================================= -->
+
+  <div class="actions">
+    <button type="submit">Save Employee</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+    <button type="button" (click)="deleteEmployee()">Delete</button>
+  </div>
+</form>

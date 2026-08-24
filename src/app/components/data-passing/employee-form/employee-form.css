@@ -1,0 +1,279 @@
+/* =========================================
+   Employee Form
+========================================= */
+
+.employee-form {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================
+   Form Field
+========================================= */
+
+.employee-form > div:not(.actions) {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* =========================================
+   Labels
+========================================= */
+
+.employee-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: #374151;
+}
+
+/* =========================================
+   Inputs & Select
+========================================= */
+
+.employee-form input:not([type='checkbox']),
+.employee-form select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* =========================================
+   Placeholder
+========================================= */
+
+.employee-form input::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================================
+   Focus State
+========================================= */
+
+.employee-form input:not([type='checkbox']):focus,
+.employee-form select:focus {
+  border-color: #3525cd;
+  box-shadow: 0 0 0 3px rgba(53, 37, 205, 0.12);
+}
+
+/* =========================================
+   Readonly Employee ID
+========================================= */
+
+.employee-form input[readonly] {
+  color: #6b7280;
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Select
+========================================= */
+
+.employee-form select {
+  cursor: pointer;
+}
+
+/* =========================================
+   Validation Message
+========================================= */
+
+.employee-form small {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #dc2626;
+}
+
+/* =========================================
+   Checkbox
+========================================= */
+
+.employee-form input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #3525cd;
+  cursor: pointer;
+}
+
+/* =========================================
+   Remote Employee Label
+========================================= */
+
+.employee-form > div:has(input[type='checkbox']) label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+/* =========================================
+   Actions
+========================================= */
+
+.employee-form .actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* =========================================
+   Buttons
+========================================= */
+
+.employee-form button {
+  min-width: 120px;
+  height: 44px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* =========================================
+   Save Button
+========================================= */
+
+.employee-form button[type='submit'] {
+  color: #ffffff;
+  background: #3525cd;
+  border-color: #3525cd;
+}
+
+.employee-form button[type='submit']:hover {
+  background: #2d20ad;
+  border-color: #2d20ad;
+}
+
+.employee-form button[type='submit']:active {
+  transform: translateY(1px);
+}
+
+/* =========================================
+   Cancel Button
+========================================= */
+
+.employee-form button[type='button'] {
+  color: #374151;
+  background: #ffffff;
+  border-color: #d1d5db;
+}
+
+.employee-form button[type='button']:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* =========================================
+   Delete Button
+========================================= */
+
+.employee-form button:last-child {
+  color: #dc2626;
+  background: #ffffff;
+  border-color: #fecaca;
+}
+
+.employee-form button:last-child:hover {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+/* =========================================
+   Disabled Buttons
+========================================= */
+
+.employee-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Tablet
+========================================= */
+
+@media (max-width: 768px) {
+  .employee-form {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .employee-form .actions {
+    grid-column: auto;
+    justify-content: stretch;
+    flex-wrap: wrap;
+  }
+
+  .employee-form button {
+    flex: 1;
+  }
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 480px) {
+  .employee-form {
+    padding: 16px;
+    gap: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  }
+
+  .employee-form input:not([type='checkbox']),
+  .employee-form select {
+    height: 42px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
+
+  .employee-form .actions {
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 20px;
+  }
+
+  .employee-form button {
+    width: 100%;
+    flex: none;
+  }
+}

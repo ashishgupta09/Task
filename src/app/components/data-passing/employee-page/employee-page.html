@@ -1,0 +1,45 @@
+<div class="employee-page">
+  <h1
+    style="
+      margin: 0 0 32px;
+      padding: 24px 16px;
+      text-align: center;
+      font-size: 32px;
+      line-height: 40px;
+      font-weight: 700;
+      color: #3525cd;
+    "
+  >
+    Employee Management
+  </h1>
+
+  <!--
+    Parent -> Child
+
+    [employee]
+    [departments]
+    [locations]
+    [managers]
+    [employmentTypes]
+    [statuses]
+
+    Child -> Parent
+
+    (employeeSaved)
+    (cancelled)
+    (deleteRequested)
+  -->
+
+  <app-employee-form
+    [employee]="employee"
+    [departments]="departments"
+    [locations]="locations"
+    [managers]="managers"
+    [employmentTypes]="employmentTypes"
+    [statuses]="statuses"
+    (employeeSaved)="onEmployeeSaved($event)"
+    (cancelled)="onCancelled()"
+    (deleteRequested)="onDeleteEmployee($event)"
+  >
+  </app-employee-form>
+</div>
