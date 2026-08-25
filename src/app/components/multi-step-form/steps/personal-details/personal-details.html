@@ -1,0 +1,127 @@
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">Step 1</span>
+    <h2>Personal Details</h2>
+    <p class="step-desc">
+      Data technique: <code>@Output()</code> — emits validated data to the parent.
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onNext()" novalidate>
+    <div class="form-row">
+      <!-- FirstName -->
+
+      <div class="field">
+        <label for="firstName">FirstName</label>
+        <input
+          placeholder="Alice"
+          id="firstName"
+          type="text"
+          autocomplete="given-name"
+          formControlName="firstName"
+          [class.invalid]="firstName.invalid && firstName.touched"
+        />
+
+        @if (firstName.invalid && firstName.touched) {
+          <div class="error">
+            @if (firstName.errors?.['required']) {
+              First name is required.
+            } @else if (firstName.errors?.['minlength']) {
+              At least 2 characters.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- LastName -->
+
+      <div class="field">
+        <label for="lastName">LastName</label>
+        <input
+          placeholder="Johnson"
+          id="lastName"
+          type="text"
+          autocomplete="family-name"
+          formControlName="lastName"
+          [class.invalid]="lastName.invalid && lastName.touched"
+        />
+
+        @if (lastName.invalid && lastName.touched) {
+          <div class="error">
+            @if (lastName.errors?.['required']) {
+              Last name is required.
+            } @else if (lastName.errors?.['minlength']) {
+              At least 2 characters.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Email -->
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          placeholder="alice@example.com"
+          [class.invalid]="email.invalid && email.touched"
+        />
+        @if (email.invalid && email.touched) {
+          <span class="error">
+            @if (email.errors?.['required']) {
+              Email is required.
+            } @else if (email.errors?.['email']) {
+              Enter a valid email address.
+            }
+          </span>
+        }
+      </div>
+
+      <!-- Phone -->
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input
+          id="phone"
+          type="tel"
+          formControlName="phone"
+          autocomplete="tel"
+          placeholder="+1-555-0101"
+          [class.invalid]="phone.invalid && phone.touched"
+        />
+        @if (phone.invalid && phone.touched) {
+          <span class="error">
+            @if (phone.errors?.['required']) {
+              Phone is required.
+            } @else if (phone.errors?.['pattern']) {
+              Enter a valid phone number.
+            }
+          </span>
+        }
+      </div>
+
+      <!-- button -->
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          Next — Edit Details
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
