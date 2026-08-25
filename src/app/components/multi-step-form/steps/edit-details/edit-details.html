@@ -1,1 +1,136 @@
-<p>edit-details works!</p>
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">Step 2</span>
+    <h2>Edit Details</h2>
+    <p class="step-desc">
+      Data techniques: <code>@Input()</code> pre-fills the form &amp; <code>@Output()</code> sends
+      updates to the parent.
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onNext()" novalidate>
+    <div class="form-row">
+      <!-- firstName -->
+
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          autocomplete="given-name"
+          formControlName="firstName"
+          [class.invalid]="firstName.invalid && firstName.touched"
+        />
+        @if (firstName.invalid && firstName.touched) {
+          <div class="error">
+            @if (firstName.errors?.['required']) {
+              First name is required.
+            } @else if (firstName.errors?.['minlength']) {
+              At least 2 characters.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- lastName -->
+
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+          autocomplete="family-name"
+          [class.invalid]="lastName.invalid && lastName.touched"
+        />
+        @if (lastName.invalid && lastName.touched) {
+          <div class="error">
+            @if (lastName.errors?.['required']) {
+              Last name is required.
+            } @else if (lastName.errors?.['minlength']) {
+              At least 2 characters.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- email -->
+
+      <div class="field">
+        <label for="email">Last Name</label>
+        <input
+          type="text"
+          id="email"
+          formControlName="email"
+          autocomplete="family-name"
+          [class.invalid]="email.invalid && email.touched"
+        />
+        @if (email.invalid && email.touched) {
+          <div class="error">
+            @if (email.errors?.['required']) {
+              email is required.
+            } @else if (email.errors?.['email']) {
+              Enter a valid email address.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- phone -->
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input
+          type="text"
+          formControlName="phone"
+          autocomplete="family-name"
+          [class.invalid]="phone.invalid && phone.touched"
+        />
+        @if (phone.invalid && phone.touched) {
+          <div class="error">
+            @if (phone.errors?.['required']) {
+              Phone is required.
+            } @else if (phone.errors?.['pattern']) {
+              Enter a valid phone number.
+            }
+          </div>
+        }
+      </div>
+
+      <!-- button -->
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="onBack()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          Back
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Next — Review
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

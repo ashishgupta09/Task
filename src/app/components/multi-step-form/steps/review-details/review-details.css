@@ -1,0 +1,297 @@
+/* =========================================
+   Step Card
+========================================= */
+
+.step-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* =========================================
+   Step Header
+========================================= */
+
+.step-header {
+  margin-bottom: 24px;
+}
+
+.step-header .step-badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background-color: #ede9fe;
+  color: #3525cd;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.step-header h2 {
+  margin: 2px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.step-header .step-desc {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* =========================================
+   Form Row
+========================================= */
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   Field
+========================================= */
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0;
+}
+
+.field input {
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: #111827;
+  background-color: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: #3525cd;
+  box-shadow: 0 0 0 3px rgba(53, 37, 205, 0.12);
+}
+
+.field input.invalid {
+  border-color: #dc2626;
+}
+
+.field input.invalid:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.field .error {
+  font-size: 12px;
+  color: #dc2626;
+  margin-top: 2px;
+}
+
+/* =========================================
+   Form Actions
+========================================= */
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.form-actions.single-action {
+  justify-content: flex-end;
+}
+
+/* =========================================
+   Buttons
+========================================= */
+
+.form-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+
+  border: none;
+}
+
+.form-actions .btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* =========================================
+   Primary Button
+========================================= */
+
+.form-actions .btn.btn-primary {
+  background: #3525cd;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.form-actions .btn.btn-primary:hover {
+  background: #2d20ad;
+}
+
+/* =========================================
+   Secondary Button
+========================================= */
+
+.form-actions .btn.btn-secondary {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.form-actions .btn.btn-secondary:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* =========================================
+   Success Button
+========================================= */
+
+.form-actions .btn.btn-success {
+  background: #16a34a;
+  color: #ffffff;
+  margin-left: auto;
+}
+
+.form-actions .btn.btn-success:hover {
+  background: #15803d;
+}
+
+/* =========================================
+   Disabled Button
+========================================= */
+
+.form-actions .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   Review Card
+========================================= */
+
+.review-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   Review Row
+========================================= */
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.review-row:last-child {
+  border-bottom: none;
+}
+
+.review-row .review-label {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.review-row .review-value {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* =========================================
+   Submit Note
+========================================= */
+
+.submit-note {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 16px;
+}
+
+.submit-note svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke: #2563eb;
+}
+
+.submit-note p {
+  margin: 0;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-actions {
+    flex-wrap: wrap;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+
+  .review-row {
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

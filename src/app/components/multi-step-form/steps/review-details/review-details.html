@@ -1,1 +1,58 @@
-<p>review-details works!</p>
+<div class="step-card">
+  <div class="step-header">
+    <span class="step-badge">Step 3</span>
+    <h2>Review Details</h2>
+    <p class="step-desc">
+      Data techniques: <strong>Shared Service</strong> + <strong>Signal</strong> — reads directly
+      from <code>FormDataService.formStateSignal</code>. No <code>@Input()</code> needed.
+    </p>
+  </div>
+
+  <div class="review-card">
+    <div class="review-row">
+      <span class="review-label">Full Name</span>
+      <span class="review-value">{{ fullName() }}</span>
+    </div>
+    <div class="review-row">
+      <span class="review-label">Email</span>
+      <span class="review-value">{{ formStare().personalDetails.email }}</span>
+    </div>
+    <div class="review-row">
+      <span class="review-label">Phone</span>
+      <span class="review-value">{{ formStare().personalDetails.phone }}</span>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn btn-secondary" (click)="onBack()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back
+    </button>
+    <button type="button" class="btn btn-success" (click)="onSubmit()">
+      Submit
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </button>
+  </div>
+  
+</div>
