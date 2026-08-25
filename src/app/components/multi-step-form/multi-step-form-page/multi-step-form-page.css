@@ -1,0 +1,328 @@
+.msf-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+/* =========================================
+   Title
+========================================= */
+
+.msf-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.msf-title h1 {
+  font-size: 32px;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.msf-title p {
+  color: #6b7280;
+  font-size: 14px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.msf-title p code {
+  background: #ede9fe;
+  color: #3525cd;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* =========================================
+   Stepper
+========================================= */
+
+.msf-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 480px;
+  margin: 0 auto 32px;
+}
+
+/* =========================================
+   Connector
+========================================= */
+
+.msf-connector {
+  flex: 1;
+  height: 2px;
+  background-color: #e5e7eb;
+  margin: 0 4px;
+}
+
+.msf-connector.completed {
+  background-color: #16a34a;
+}
+
+/* =========================================
+   Step
+========================================= */
+
+.msf-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.msf-step.clickable {
+  cursor: pointer;
+}
+
+.msf-step.clickable:hover .msf-step-circle {
+  border-color: #3525cd;
+  transform: scale(1.08);
+}
+
+/* =========================================
+   Active Step
+========================================= */
+
+.msf-step.active .msf-step-circle {
+  background-color: #3525cd;
+  color: #ffffff;
+  border-color: #3525cd;
+  box-shadow: 0 0 0 4px rgba(53, 37, 205, 0.12);
+}
+
+.msf-step.active .msf-step-label {
+  color: #3525cd;
+  font-weight: 600;
+}
+
+/* =========================================
+   Completed Step
+========================================= */
+
+.msf-step.completed .msf-step-circle {
+  background-color: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.msf-step.completed .msf-step-label {
+  color: #16a34a;
+}
+
+/* =========================================
+   Step Circle
+========================================= */
+
+.msf-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  border: 2px solid #e5e7eb;
+  color: #9ca3af;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 600;
+  font-size: 14px;
+
+  transition: all 0.2s ease;
+}
+
+.msf-step-circle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================================
+   Step Label
+========================================= */
+
+.msf-step-label {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* =========================================
+   Content
+========================================= */
+
+.msf-content {
+  margin-bottom: 32px;
+}
+
+/* =========================================
+   Success Card
+========================================= */
+
+.success-card {
+  text-align: center;
+  padding: 48px 32px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.success-card h2 {
+  font-size: 24px;
+  margin: 16px 0 4px;
+}
+
+.success-card p {
+  color: #6b7280;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.success-card .btn-primary {
+  padding: 10px 24px;
+  border-radius: 8px;
+  background: #3525cd;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.success-card .btn-primary:hover {
+  background: #2d20ad;
+}
+
+/* =========================================
+   Success Icon
+========================================= */
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background: #dcfce7;
+  color: #16a34a;
+  border: 2px solid #16a34a;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto;
+}
+
+.success-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* =========================================
+   Legend
+========================================= */
+
+.msf-legend {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.msf-legend h3 {
+  font-size: 12px;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.msf-legend ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 8px;
+  padding: 0;
+  margin: 0;
+}
+
+.msf-legend ul li {
+  font-size: 12px;
+  color: #6b7280;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* =========================================
+   Tags
+========================================= */
+
+.msf-legend .tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.msf-legend .tag.tag-output {
+  background: #ede9fe;
+  color: #3525cd;
+}
+
+.msf-legend .tag.tag-input {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.msf-legend .tag.tag-service {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.msf-legend .tag.tag-storage {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.msf-legend .tag.tag-rx {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+/* =========================================
+   Responsive
+========================================= */
+
+@media (max-width: 600px) {
+  .msf-container {
+    padding: 24px 16px;
+  }
+
+  .msf-title h1 {
+    font-size: 26px;
+  }
+
+  .msf-stepper {
+    max-width: 100%;
+  }
+
+  .msf-step-label {
+    font-size: 11px;
+  }
+
+  .success-card {
+    padding: 32px 20px;
+  }
+
+  .msf-legend ul {
+    flex-direction: column;
+    align-items: center;
+  }
+}

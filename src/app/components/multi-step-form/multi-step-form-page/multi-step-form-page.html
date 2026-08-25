@@ -1,0 +1,129 @@
+<div class="msf-container">
+  <div class="msf-title">
+    <h1>Multi-Step Form</h1>
+    <p>
+      Demonstrating Angular data-passing techniques: <code>@Input</code>, <code>@Output</code>,
+      Shared Service, BehaviorSubject, Signals &amp; LocalStorage.
+    </p>
+  </div>
+
+  @if (!submitted) {
+    <div class="msf-stepper">
+      @for (step of [1, 2, 3]; track step) {
+        <div
+          class="msf-step"
+          role="listitem"
+          [class.active]="currentStep() === step"
+          [class.completed]="step < currentStep()"
+          [attr.aria-current]="currentStep() === step ? 'step' : null"
+          (click)="onStepClick(step)"
+        >
+          <div class="msf-step-circle">
+            @if (currentStep() > step) {
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            } @else {
+              {{ step }}
+            }
+          </div>
+          <span class="msf-step-label">
+            @switch (step) {
+              @case (1) {
+                Personal Details
+              }
+              @case (2) {
+                Edit Details
+              }
+              @case (3) {
+                Review
+              }
+            }
+          </span>
+        </div>
+
+        @if (step < 3) {
+          <div class="msf-connector" [class.completed]="currentStep() > step"></div>
+        }
+      }
+    </div>
+  }
+
+  <div class="msf-content">
+    @if (submitted) {
+      <!-- ── Success State ── -->
+      <div class="success-card">
+        <div class="success-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h2>Submitted Successfully!</h2>
+        <p>Your details have been logged to the console. Check DevTools → Console.</p>
+        <button class="btn btn-primary" (click)="onReset()">Start Again</button>
+      </div>
+    } @else {
+      @switch (currentStep()) {
+        @case (1) {
+          <app-personal-details [details]="personalDetails()" (next)="onStep1Next($event)" />
+        }
+        @case (2) {
+          <app-edit-details
+            [details]="personalDetails()"
+            (next)="onStep2Next($event)"
+            (back)="onStep2Back($event)"
+          />
+        }
+        @case (3) {
+          <app-review-details (submit)="onSubmit()" (back)="onStep3Back()" />
+        }
+      }
+    }
+  </div>
+
+  <!-- Data Technique Legend -->
+  @if (!submitted) {
+    <div class="msf-legend">
+      <h3>Data Techniques in Use</h3>
+      <ul>
+        <li><span class="tag tag-output">@Output</span> Step 1 emits validated data to parent</li>
+        <li>
+          <span class="tag tag-input">@Input</span> Parent passes data down to Step 2 for
+          pre-filling
+        </li>
+        <li>
+          <span class="tag tag-output">@Output</span> Step 2 emits updated data + back event to
+          parent
+        </li>
+        <li>
+          <span class="tag tag-service">Service + Signal</span> Step 3 reads directly from
+          <code>FormDraftStore.formStateSignal</code>
+        </li>
+        <li>
+          <span class="tag tag-storage">LocalStorage</span> Draft auto-saved — survives page refresh
+        </li>
+        <li>
+          <span class="tag tag-rx">BehaviorSubject</span> Service state also exposed as observable
+          for async pipelines
+        </li>
+      </ul>
+    </div>
+  }
+</div>
