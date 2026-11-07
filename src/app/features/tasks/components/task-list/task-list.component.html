@@ -1,0 +1,237 @@
+<!-- ============================================================================
+  FILE: task-list.component.html
+  PURPOSE: Parent template rendering TaskCardComponent for each task
+           with Grid & Table view switchers and Empty state illustration
+============================================================================ -->
+
+<div class="space-y-4">
+  <!-- Section Controls Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2">
+    <div>
+      <div class="flex items-center gap-2">
+        <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+          Active Tasks
+        </h2>
+        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800/80">
+          {{ filteredTasks().length }} of {{ taskStatistics().total }}
+        </span>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+        Real-time synchronized pipeline driven by Angular Signals state
+      </p>
+    </div>
+
+    <!-- Right Controls: View Switcher + Add Task Button -->
+    <div class="flex items-center gap-2.5">
+      <!-- Grid / Table View Switcher -->
+      <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200/60 dark:border-slate-700/60">
+        <button
+          type="button"
+          (click)="setViewMode('grid')"
+          class="p-1.5 rounded-lg transition"
+          [class]="viewMode() === 'grid'
+            ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-xs'
+            : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'"
+          title="Grid View"
+          aria-label="Switch to grid view"
+        >
+          <app-icon name="grid" [size]="16" />
+        </button>
+        <button
+          type="button"
+          (click)="setViewMode('table')"
+          class="p-1.5 rounded-lg transition"
+          [class]="viewMode() === 'table'
+            ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-xs'
+            : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'"
+          title="Table View"
+          aria-label="Switch to table view"
+        >
+          <app-icon name="list" [size]="16" />
+        </button>
+      </div>
+
+      <!-- Add Task Button -->
+      <button
+        (click)="onAddTask()"
+        class="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-3.5 py-2 rounded-xl shadow-sm shadow-indigo-600/25 active:scale-95 transition"
+      >
+        <app-icon name="plus" [size]="15" strokeWidth="2.5" />
+        <span>Add Task</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- VIEW MODE 1: GRID VIEW -->
+  @if (viewMode() === 'grid') {
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      @for (task of filteredTasks(); track task.id) {
+        <app-task-card
+          [task]="task"
+          [enableEdit]="true"
+          [highlightOverdue]="true"
+          (editTask)="onEditTask($event)"
+          (deleteTask)="onPromptDelete($event)"
+          (statusChange)="onStatusChange($event)"
+          (viewDetails)="navigateToDetail($event)"
+        />
+      } @empty {
+        <!-- Empty State Illustration -->
+        <div class="col-span-full rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/40 p-12 text-center">
+          <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <app-icon name="folder" [size]="28" />
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">No tasks match your filters</h3>
+          <p class="mt-1 text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+            Try adjusting your search criteria, clear existing filters, or create a brand new task.
+          </p>
+          <div class="mt-5 flex items-center justify-center gap-3">
+            <button
+              (click)="resetAllFilters()"
+              class="px-4 py-2 text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl transition"
+            >
+              Reset Filters
+            </button>
+            <button
+              (click)="onAddTask()"
+              class="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl shadow-xs transition"
+            >
+              Create New Task
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- VIEW MODE 2: TABLE VIEW -->
+    <div class="overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs">
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50/80 dark:bg-slate-800/60 border-b border-slate-200/60 dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase font-bold text-[10px] tracking-wider">
+            <tr>
+              <th scope="col" class="py-3.5 px-4">Task</th>
+              <th scope="col" class="py-3.5 px-4">Category</th>
+              <th scope="col" class="py-3.5 px-4">Status</th>
+              <th scope="col" class="py-3.5 px-4">Priority</th>
+              <th scope="col" class="py-3.5 px-4">Assignee</th>
+              <th scope="col" class="py-3.5 px-4">Due Date</th>
+              <th scope="col" class="py-3.5 px-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+            @for (task of filteredTasks(); track task.id) {
+              <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                <!-- Title & Description -->
+                <td class="py-3 px-4">
+                  <div class="font-bold text-slate-900 dark:text-white cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400" (click)="navigateToDetail(task)">
+                    {{ task.title }}
+                  </div>
+                  <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-xs">
+                    {{ task.description }}
+                  </div>
+                </td>
+
+                <!-- Category -->
+                <td class="py-3 px-4 whitespace-nowrap">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    {{ task.category || 'General' }}
+                  </span>
+                </td>
+
+                <!-- Status -->
+                <td class="py-3 px-4 whitespace-nowrap">
+                  <span
+                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold"
+                    [ngClass]="{
+                      'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400': task.status === 'PENDING',
+                      'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400': task.status === 'IN_PROGRESS',
+                      'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400': task.status === 'COMPLETED'
+                    }"
+                  >
+                    @switch (task.status) {
+                      @case ('PENDING') { <app-icon name="clock" [size]="11" /> Pending }
+                      @case ('IN_PROGRESS') { <app-icon name="loader" [size]="11" /> In Progress }
+                      @case ('COMPLETED') { <app-icon name="check-circle" [size]="11" /> Completed }
+                    }
+                  </span>
+                </td>
+
+                <!-- Priority -->
+                <td class="py-3 px-4 whitespace-nowrap">
+                  <span
+                    class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase"
+                    [ngClass]="{
+                      'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400': task.priority === 'HIGH',
+                      'bg-orange-50 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400': task.priority === 'MEDIUM',
+                      'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300': task.priority === 'LOW'
+                    }"
+                  >
+                    {{ task.priority }}
+                  </span>
+                </td>
+
+                <!-- Assignee -->
+                <td class="py-3 px-4 whitespace-nowrap">
+                  <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-400 flex items-center justify-center font-bold text-[10px]">
+                      {{ task.assigneeAvatar || task.assignee.slice(0, 2).toUpperCase() }}
+                    </div>
+                    <span class="text-slate-700 dark:text-slate-300 font-medium">{{ task.assignee }}</span>
+                  </div>
+                </td>
+
+                <!-- Due Date -->
+                <td class="py-3 px-4 whitespace-nowrap text-slate-500 dark:text-slate-400">
+                  {{ task.dueDate ? (task.dueDate | date:'mediumDate') : 'No deadline' }}
+                </td>
+
+                <!-- Actions -->
+                <td class="py-3 px-4 text-right whitespace-nowrap">
+                  <div class="inline-flex items-center gap-1">
+                    <button
+                      (click)="navigateToDetail(task)"
+                      class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                      title="View Details"
+                    >
+                      <app-icon name="eye" [size]="15" />
+                    </button>
+                    <button
+                      (click)="onEditTask(task)"
+                      class="p-1 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                      title="Edit"
+                    >
+                      <app-icon name="pencil" [size]="15" />
+                    </button>
+                    <button
+                      (click)="onPromptDelete(task.id)"
+                      class="p-1 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition"
+                      title="Delete"
+                    >
+                      <app-icon name="trash-2" [size]="15" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="py-8 text-center text-slate-400">
+                  No tasks found matching your filter criteria.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  <!-- Delete Confirmation Dialog -->
+  <app-confirmation-dialog
+    [isOpen]="isConfirmOpen()"
+    title="Delete Task"
+    [message]="'Are you sure you want to delete task #' + (taskToDelete()?.id || '') + ' (' + (taskToDelete()?.title || '') + ')? This action will remove it from the board.'"
+    confirmText="Delete Task"
+    (confirm)="onConfirmDelete()"
+    (cancel)="onCancelDelete()"
+  />
+</div>

@@ -1,0 +1,206 @@
+<!-- ============================================================================
+  FILE: sidebar.component.html
+  PURPOSE: Vertical sidebar with brand, navigation groups, category tags, and user card
+============================================================================ -->
+
+<!-- Mobile Backdrop -->
+@if (sidebarService.isMobileOpen()) {
+  <div
+    (click)="sidebarService.closeMobile()"
+    class="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden transition-opacity"
+  ></div>
+}
+
+<!-- Sidebar Container -->
+<aside
+  class="fixed top-0 bottom-0 left-0 z-50 flex flex-col w-64 bg-white dark:bg-[#0F172A] border-r border-slate-200 dark:border-slate-800 transition-transform duration-300 lg:static lg:translate-x-0"
+  [class.-translate-x-full]="!sidebarService.isMobileOpen()"
+  [class.translate-x-0]="sidebarService.isMobileOpen()"
+>
+  <!-- Brand Header -->
+  <div class="h-16 flex items-center justify-between px-6 border-b border-slate-100 dark:border-slate-800/80">
+    <a
+      routerLink="/dashboard"
+      (click)="selectNav('ALL')"
+      class="flex items-center gap-2.5 font-bold text-slate-900 dark:text-white group"
+    >
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+        <app-icon name="check-square" [size]="20" />
+      </div>
+      <div class="flex flex-col">
+        <span class="text-base font-extrabold tracking-tight">TaskManager 22</span>
+        <span class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest -mt-1">Enterprise SaaS</span>
+      </div>
+    </a>
+
+    <!-- Mobile Close Button -->
+    <button
+      (click)="sidebarService.closeMobile()"
+      class="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+    >
+      <app-icon name="x" [size]="18" />
+    </button>
+  </div>
+
+  <!-- Navigation Content -->
+  <div class="flex-1 overflow-y-auto px-4 py-5 space-y-6">
+    <!-- Main Menu Group -->
+    <div>
+      <div class="px-3 mb-2 text-[11px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">
+        Workspace
+      </div>
+      <nav class="space-y-1">
+        <!-- Dashboard Overview -->
+        <a
+          routerLink="/dashboard"
+          (click)="selectNav('ALL')"
+          class="flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition"
+          [class]="isFilterActive('ALL')
+            ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="layout-dashboard" [size]="18" />
+            <span>Dashboard</span>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            {{ stats().total }}
+          </span>
+        </a>
+
+        <!-- All Tasks -->
+        <button
+          (click)="selectNav('ALL')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition text-left"
+          [class]="isFilterActive('ALL')
+            ? 'bg-indigo-50/70 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="layers" [size]="18" />
+            <span>All Tasks</span>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            {{ stats().total }}
+          </span>
+        </button>
+
+        <!-- My Tasks -->
+        <button
+          (click)="selectNav('ALL', 'Alice Johnson')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition text-left"
+          [class]="isFilterActive('ALL', true)
+            ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="user" [size]="18" />
+            <span>My Tasks</span>
+          </div>
+          <span class="text-xs font-medium text-slate-400">Alice</span>
+        </button>
+
+        <!-- In Progress -->
+        <button
+          (click)="selectNav('IN_PROGRESS')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition text-left"
+          [class]="isFilterActive('IN_PROGRESS')
+            ? 'bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="loader" [size]="18" />
+            <span>In Progress</span>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300">
+            {{ stats().inProgress }}
+          </span>
+        </button>
+
+        <!-- Completed Tasks -->
+        <button
+          (click)="selectNav('COMPLETED')"
+          class="w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition text-left"
+          [class]="isFilterActive('COMPLETED')
+            ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="check-circle" [size]="18" />
+            <span>Completed</span>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+            {{ stats().completed }}
+          </span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Categories / Projects Group -->
+    <div>
+      <div class="px-3 mb-2 text-[11px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">
+        Domains & Teams
+      </div>
+      <nav class="space-y-1">
+        @for (cat of categories; track cat) {
+          <button
+            (click)="selectCategory(cat)"
+            class="w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-xs font-semibold transition text-left"
+            [class]="isCategoryActive(cat)
+              ? 'bg-violet-50 dark:bg-violet-950/50 text-violet-600 dark:text-violet-400 font-bold'
+              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full" [ngClass]="{
+                'bg-indigo-500': cat === 'Engineering',
+                'bg-violet-500': cat === 'Design',
+                'bg-amber-500': cat === 'Product',
+                'bg-rose-500': cat === 'Marketing',
+                'bg-sky-500': cat === 'DevOps'
+              }"></span>
+              <span>{{ cat }}</span>
+            </div>
+            <app-icon name="chevron-right" [size]="14" class="text-slate-300 dark:text-slate-600" />
+          </button>
+        }
+      </nav>
+    </div>
+
+    <!-- System Preferences -->
+    <div>
+      <div class="px-3 mb-2 text-[11px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">
+        Settings
+      </div>
+      <button
+        (click)="openSettings()"
+        class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white transition"
+      >
+        <app-icon name="settings" [size]="18" />
+        <span>Settings</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom User Card -->
+  <div class="p-4 border-t border-slate-100 dark:border-slate-800">
+    <div class="flex items-center gap-3 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/50">
+      <div class="relative">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+          AM
+        </div>
+        <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900"></span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-bold text-slate-900 dark:text-white truncate">Alex Morgan</p>
+        <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate">Senior Architect</p>
+      </div>
+      <button
+        (click)="openSettings()"
+        class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1"
+        title="Account Preferences"
+      >
+        <app-icon name="sliders-horizontal" [size]="16" />
+      </button>
+    </div>
+  </div>
+</aside>

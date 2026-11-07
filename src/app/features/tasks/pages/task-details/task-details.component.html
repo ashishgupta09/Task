@@ -1,0 +1,302 @@
+<!-- ============================================================================
+  FILE: task-details.component.html
+  PURPOSE: Structured two-column SaaS detail layout on desktop, single-column on mobile
+============================================================================ -->
+
+<div class="max-w-5xl mx-auto py-2 space-y-6">
+  
+  <!-- Back button & Top Action Toolbar -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <button
+      (click)="goBack()"
+      class="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+    >
+      <app-icon name="arrow-left" [size]="15" />
+      <span>Back to Dashboard</span>
+    </button>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- ParamMap Reactivity Demo button -->
+      <button
+        (click)="navigateToNextTask()"
+        class="inline-flex items-center gap-1.5 text-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 transition"
+        title="Cycles to next ID to verify Observable route parameter reactivity"
+      >
+        <span>Next Task (ParamMap Demo)</span>
+        <app-icon name="arrow-right" [size]="14" />
+      </button>
+
+      <!-- Edit Task button -->
+      <button
+        (click)="onEdit()"
+        class="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-3.5 py-1.5 rounded-xl shadow-xs transition active:scale-95"
+      >
+        <app-icon name="pencil" [size]="14" />
+        <span>Edit Task</span>
+      </button>
+
+      <!-- Delete Task button -->
+      <button
+        (click)="onPromptDelete()"
+        class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 text-xs font-bold px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-900/60 transition active:scale-95"
+      >
+        <app-icon name="trash-2" [size]="14" />
+        <span>Delete</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ROUTER COMMUNICATION INSPECTION BOX -->
+  <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 rounded-2xl p-4 text-xs space-y-2 text-indigo-950 dark:text-indigo-200 shadow-xs">
+    <div class="font-bold text-xs text-indigo-900 dark:text-indigo-300 flex items-center gap-2">
+      <app-icon name="sparkles" [size]="15" />
+      <span>Angular Router Communication Diagnostic Inspector</span>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+      <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/50 shadow-xs">
+        <span class="font-bold text-slate-400 dark:text-slate-500 block text-[10px] uppercase tracking-wider">1. Route Param (:id)</span>
+        <code class="text-indigo-600 dark:text-indigo-400 font-mono font-bold text-sm">#{{ taskId() }}</code>
+      </div>
+      <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/50 shadow-xs">
+        <span class="font-bold text-slate-400 dark:text-slate-500 block text-[10px] uppercase tracking-wider">2. Query Param (?tab=)</span>
+        <code class="text-indigo-600 dark:text-indigo-400 font-mono font-bold text-sm">{{ activeTab() }}</code>
+      </div>
+      <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border border-indigo-100 dark:border-indigo-900/50 shadow-xs">
+        <span class="font-bold text-slate-400 dark:text-slate-500 block text-[10px] uppercase tracking-wider">3. Navigation State</span>
+        <code class="text-indigo-600 dark:text-indigo-400 font-mono font-bold text-sm">{{ navigationSource() || 'Direct URL / Refreshed' }}</code>
+      </div>
+    </div>
+  </div>
+
+  @if (task(); as t) {
+    <!-- TWO-COLUMN STRUCTURED LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- LEFT COLUMN (2 Cols): Task Content, Tabs, Status Switcher -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
+          
+          <!-- Card Header Banner -->
+          <div class="p-6 sm:p-8 border-b border-slate-100 dark:border-slate-800">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  Task #{{ t.id }}
+                </span>
+                @if (t.category) {
+                  <span class="text-xs font-bold px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+                    {{ t.category }}
+                  </span>
+                }
+              </div>
+
+              <div class="flex items-center gap-2">
+                <!-- Priority Badge -->
+                <span
+                  class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"
+                  [ngClass]="{
+                    'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800': t.priority === 'HIGH',
+                    'bg-orange-50 dark:bg-orange-950/60 text-orange-700 dark:text-orange-400 border border-orange-200 dark:border-orange-800': t.priority === 'MEDIUM',
+                    'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700': t.priority === 'LOW'
+                  }"
+                >
+                  {{ t.priority }} Priority
+                </span>
+
+                <!-- Status Badge -->
+                <span
+                  class="text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5"
+                  [ngClass]="{
+                    'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800': t.status === 'PENDING',
+                    'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-800': t.status === 'IN_PROGRESS',
+                    'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800': t.status === 'COMPLETED'
+                  }"
+                >
+                  @switch (t.status) {
+                    @case ('PENDING') { <app-icon name="clock" [size]="13" /> Pending }
+                    @case ('IN_PROGRESS') { <app-icon name="loader" [size]="13" /> In Progress }
+                    @case ('COMPLETED') { <app-icon name="check-circle" [size]="13" /> Completed }
+                  }
+                </span>
+              </div>
+            </div>
+
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">
+              {{ t.title }}
+            </h1>
+          </div>
+
+          <!-- Query Param Controlled Tab Bar -->
+          <div class="flex border-b border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 px-6 text-xs font-bold">
+            <button
+              (click)="switchTab('overview')"
+              [class.text-indigo-600]="activeTab() === 'overview'"
+              [class.dark:text-indigo-400]="activeTab() === 'overview'"
+              [class.border-b-2]="activeTab() === 'overview'"
+              [class.border-indigo-600]="activeTab() === 'overview'"
+              class="py-3 px-4 transition text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white cursor-pointer"
+            >
+              Task Overview
+            </button>
+            <button
+              (click)="switchTab('metadata')"
+              [class.text-indigo-600]="activeTab() === 'metadata'"
+              [class.dark:text-indigo-400]="activeTab() === 'metadata'"
+              [class.border-b-2]="activeTab() === 'metadata'"
+              [class.border-indigo-600]="activeTab() === 'metadata'"
+              class="py-3 px-4 transition text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white cursor-pointer"
+            >
+              Audit & Timeline
+            </button>
+          </div>
+
+          <!-- Tab Content Area -->
+          <div class="p-6 sm:p-8">
+            @if (activeTab() === 'overview') {
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
+                    Description & Specifications
+                  </h3>
+                  <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+                    {{ t.description }}
+                  </p>
+                </div>
+
+                <!-- Quick Status Transition Toolbar -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-800">
+                  <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 block mb-3">
+                    Fast Status Transition:
+                  </span>
+                  <div class="flex flex-wrap gap-2.5">
+                    <button
+                      (click)="onStatusChange('PENDING')"
+                      [disabled]="t.status === 'PENDING'"
+                      class="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition"
+                    >
+                      <app-icon name="clock" [size]="14" />
+                      <span>Set Pending</span>
+                    </button>
+
+                    <button
+                      (click)="onStatusChange('IN_PROGRESS')"
+                      [disabled]="t.status === 'IN_PROGRESS'"
+                      class="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-50 transition"
+                    >
+                      <app-icon name="loader" [size]="14" />
+                      <span>Set In Progress</span>
+                    </button>
+
+                    <button
+                      (click)="onStatusChange('COMPLETED')"
+                      [disabled]="t.status === 'COMPLETED'"
+                      class="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-xl bg-emerald-600 text-white hover:bg-emerald-500 disabled:opacity-50 shadow-xs transition"
+                    >
+                      <app-icon name="check-circle" [size]="14" />
+                      <span>Mark Completed</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <!-- Audit Tab -->
+              <div class="space-y-4 text-xs">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Creation Timestamp</span>
+                  <p class="font-semibold text-slate-800 dark:text-slate-200 text-sm">
+                    {{ t.createdAt | date:'full' }}
+                  </p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Last Modification</span>
+                  <p class="font-semibold text-slate-800 dark:text-slate-200 text-sm">
+                    {{ t.updatedAt | date:'full' }}
+                  </p>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN (1 Col): Metadata Card & Assignee Info -->
+      <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 shadow-xs space-y-5">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            Task Metadata
+          </h3>
+
+          <!-- Assignee Details -->
+          <div class="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-violet-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+              {{ t.assigneeAvatar || t.assignee.slice(0, 2).toUpperCase() }}
+            </div>
+            <div>
+              <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Assigned Owner</span>
+              <p class="text-sm font-bold text-slate-900 dark:text-white">{{ t.assignee }}</p>
+            </div>
+          </div>
+
+          <!-- Due Date Card -->
+          <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Target Due Date</span>
+            <div class="flex items-center gap-2">
+              <app-icon name="calendar" [size]="16" class="text-indigo-600 dark:text-indigo-400" />
+              <span class="text-sm font-bold text-slate-900 dark:text-white">
+                {{ t.dueDate ? (t.dueDate | date:'mediumDate') : 'No deadline scheduled' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
+            <button
+              (click)="onEdit()"
+              class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-xs transition"
+            >
+              <app-icon name="pencil" [size]="15" />
+              <span>Edit Task Details</span>
+            </button>
+
+            <button
+              (click)="onPromptDelete()"
+              class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/60 text-rose-600 dark:text-rose-400 text-xs font-bold transition"
+            >
+              <app-icon name="trash-2" [size]="15" />
+              <span>Delete Task</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- Not Found Card -->
+    <div class="bg-white dark:bg-slate-900 p-12 text-center rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs">
+      <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+        <app-icon name="search" [size]="24" />
+      </div>
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">Task #{{ taskId() }} Not Found</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+        No task exists matching this identifier in the current state store.
+      </p>
+      <button
+        (click)="goBack()"
+        class="mt-5 inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition"
+      >
+        <app-icon name="arrow-left" [size]="14" />
+        <span>Return to Dashboard</span>
+      </button>
+    </div>
+  }
+
+  <!-- Delete Confirmation Modal -->
+  <app-confirmation-dialog
+    [isOpen]="isConfirmOpen()"
+    title="Delete Task"
+    [message]="'Are you sure you want to delete task #' + (task()?.id || '') + ' (' + (task()?.title || '') + ')? This action cannot be undone.'"
+    confirmText="Delete Task"
+    (confirm)="onConfirmDelete()"
+    (cancel)="onCancelDelete()"
+  />
+</div>

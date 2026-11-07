@@ -1,0 +1,68 @@
+<!-- ============================================================================
+  FILE: dashboard.component.html
+  PURPOSE: Dashboard layout with Welcome Section, Dynamic Statistics,
+           Filter & Search Toolbar, and Task List
+============================================================================ -->
+
+<div class="space-y-6 sm:space-y-8">
+  <!-- ── 1. WELCOME HERO SECTION ── -->
+  <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 p-6 sm:p-8 text-white shadow-xl shadow-indigo-950/20 border border-indigo-800/40">
+    <!-- Ambient decorative glow -->
+    <div class="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-indigo-500/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl"></div>
+
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="space-y-2 max-w-xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-semibold backdrop-blur-xs">
+          <app-icon name="calendar" [size]="13" />
+          <span>{{ today | date:'EEEE, MMMM d, y' }}</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
+          Welcome back, Alex 👋
+        </h1>
+        <p class="text-xs sm:text-sm text-indigo-200/90 leading-relaxed">
+          Monitor your cross-functional sprint goals, evaluate real-time task throughput, and synchronize workflow state across your team.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          (click)="onResetFilters()"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold backdrop-blur-xs border border-white/15 transition active:scale-95"
+        >
+          <app-icon name="sliders-horizontal" [size]="15" />
+          <span>Reset Filters</span>
+        </button>
+
+        <button
+          (click)="onCreateTask()"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white text-xs font-bold shadow-lg shadow-indigo-500/30 transition active:scale-95"
+        >
+          <app-icon name="plus" [size]="16" strokeWidth="2.5" />
+          <span>Create New Task</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. DYNAMIC STATISTICS (Angular Computed Signals) ── -->
+  <section aria-labelledby="stats-heading">
+    <app-task-statistics />
+  </section>
+
+  <!-- ── 3. SEARCH & FILTER TOOLBAR ── -->
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-4 items-center" aria-label="Task controls">
+    <div class="lg:col-span-1">
+      <app-task-search />
+    </div>
+    <div class="lg:col-span-2">
+      <app-task-filter />
+    </div>
+  </section>
+
+  <!-- ── 4. MAIN TASK MANAGEMENT LIST (Input/Output + Signals) ── -->
+  <main aria-label="Task items">
+    <app-task-list />
+  </main>
+</div>

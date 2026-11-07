@@ -1,0 +1,29 @@
+<!-- ============================================================================
+  FILE: task-search.component.html
+  PURPOSE: Modern Search input field with Lucide search icon and clear button
+============================================================================ -->
+
+<div class="relative w-full">
+  <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-slate-500">
+    <app-icon name="search" [size]="16" />
+  </div>
+
+  <input
+    #searchField
+    type="text"
+    [value]="searchInput()"
+    (input)="onSearch(searchField.value)"
+    placeholder="Filter tasks by title, assignee, or keyword..."
+    class="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-2.5 pl-10 pr-10 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 shadow-xs transition"
+  />
+
+  @if (hasSearchTerm()) {
+    <button
+      (click)="clearSearch()"
+      class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition"
+      title="Clear search"
+    >
+      <app-icon name="x" [size]="16" />
+    </button>
+  }
+</div>

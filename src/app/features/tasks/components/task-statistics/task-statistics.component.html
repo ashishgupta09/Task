@@ -1,0 +1,85 @@
+<!-- ============================================================================
+  FILE: task-statistics.component.html
+  PURPOSE: 4 modern statistic cards with Lucide icons + completion rate banner
+============================================================================ -->
+
+<div class="space-y-4">
+  <!-- 4 Metrics Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- 1. Total Tasks (Indigo) -->
+    <app-statistics-card
+      title="Total Tasks"
+      [value]="stats().total"
+      icon="layers"
+      color="indigo"
+      trend="+12% velocity"
+      trendDirection="up"
+      subtitle="Workspace total"
+    />
+
+    <!-- 2. Pending Tasks (Amber) -->
+    <app-statistics-card
+      title="Pending"
+      [value]="stats().pending"
+      icon="clock"
+      color="amber"
+      [trend]="pendingPercent() + ' backlog'"
+      trendDirection="neutral"
+      subtitle="Requires triage"
+    />
+
+    <!-- 3. In Progress (Sky Blue) -->
+    <app-statistics-card
+      title="In Progress"
+      [value]="stats().inProgress"
+      icon="loader"
+      color="sky"
+      [trend]="inProgressPercent() + ' active'"
+      trendDirection="up"
+      subtitle="Currently in dev"
+    />
+
+    <!-- 4. Completed Tasks (Emerald) -->
+    <app-statistics-card
+      title="Completed"
+      [value]="stats().completed"
+      icon="check-circle"
+      color="emerald"
+      [trend]="completionText() + ' rate'"
+      trendDirection="up"
+      subtitle="Finished goals"
+    />
+  </div>
+
+  <!-- Overall Completion Banner -->
+  <div class="rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-xl bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+          <app-icon name="trending-up" [size]="18" />
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-slate-900 dark:text-white">Sprint Completion Progress</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            {{ stats().completed }} of {{ stats().total }} tasks completed across active milestones
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">Total Completion:</span>
+        <span class="text-base font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-xl border border-indigo-100 dark:border-indigo-900">
+          {{ completionText() }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Animated Gradient Progress Bar -->
+    <div class="h-2.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+      <div
+        class="h-full rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-emerald-500 transition-all duration-700 ease-out shadow-xs"
+        [style.width]="completionText()"
+      ></div>
+    </div>
+  </div>
+</div>
