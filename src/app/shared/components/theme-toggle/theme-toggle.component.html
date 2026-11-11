@@ -1,0 +1,29 @@
+<div class="theme-toggle" aria-label="Theme selector">
+  <button
+    type="button"
+    class="theme-toggle__button"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen()"
+    [attr.aria-label]="'Select theme. Current theme: ' + activeLabel"
+  >
+    <app-icon [name]="activeIcon" [size]="18" />
+  </button>
+
+  @if (isMenuOpen()) {
+    <div class="theme-toggle__menu" role="menu" aria-label="Theme options">
+      @for (option of options; track option.value) {
+        <button
+          type="button"
+          class="theme-toggle__option"
+          [class.is-active]="themeService.currentTheme() === option.value"
+          (click)="setTheme(option.value)"
+          role="menuitemradio"
+          [attr.aria-checked]="themeService.currentTheme() === option.value"
+        >
+          <app-icon [name]="option.icon" [size]="15" />
+          <span>{{ option.label }}</span>
+        </button>
+      }
+    </div>
+  }
+</div>

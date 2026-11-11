@@ -16,11 +16,12 @@ import { ThemeService } from '../../../core/services/theme.service';
 import { SidebarService } from '../../../core/services/sidebar.service';
 import { NotificationComponent } from '../notification/notification.component';
 import { IconComponent } from '../icon/icon.component';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, NotificationComponent, IconComponent],
+  imports: [CommonModule, RouterLink, NotificationComponent, IconComponent, ThemeToggleComponent],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

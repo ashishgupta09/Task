@@ -5,6 +5,7 @@
 // ============================================================================
 
 import { Routes } from '@angular/router';
+import { employeeFormRoutes } from './features/employee-form/employee-form.routes';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
         './features/tasks/pages/dashboard/dashboard.component'
       ).then((m) => m.DashboardComponent),
     title: 'Dashboard | TaskManager 22',
+  },
+  {
+    path: 'employees',
+    children: employeeFormRoutes,
+    title: 'Employee Management | TaskManager 22',
   },
   {
     path: 'tasks/new',

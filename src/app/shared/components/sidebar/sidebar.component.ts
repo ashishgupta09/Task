@@ -20,7 +20,7 @@ import { TaskStatus, TaskCategory } from '../../models/task.model';
 export class SidebarComponent {
   readonly sidebarService = inject(SidebarService);
   private readonly taskService = inject(TaskService);
-  private readonly router = inject(Router);
+  readonly router = inject(Router);
 
   // Statistics signals for sidebar counts
   readonly stats = this.taskService.taskStatistics;

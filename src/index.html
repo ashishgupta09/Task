@@ -11,7 +11,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-50 dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+<body>
+  <script>
+    (function () {
+      const themeKey = 'taskflow_theme';
+      const storage = window.localStorage;
+      const saved = storage.getItem(themeKey);
+      const mode = saved === 'light' || saved === 'dark' || saved === 'system' ? saved : 'system';
+      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const resolved = mode === 'system' ? (systemDark ? 'dark' : 'light') : mode;
+      document.documentElement.dataset.theme = resolved;
+      document.documentElement.classList.toggle('dark', resolved === 'dark');
+    })();
+  </script>
   <app-root></app-root>
 </body>
 </html>

@@ -1,0 +1,452 @@
+<div class="employee-form-shell">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Enterprise Reactive Forms</p>
+      <h1>Employee Registration &amp; Management</h1>
+    </div>
+
+    <div class="header-actions">
+      <button type="button" class="secondary-button" (click)="resetForm()">Reset form</button>
+      <button type="submit" class="primary-button" form="employee-form">Save employee</button>
+    </div>
+  </header>
+
+  <form id="employee-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <section class="panel">
+      <div class="section-header">
+        <h2>Personal Information</h2>
+        <span>FormControl + FormGroup + Conditional validation</span>
+      </div>
+
+      <div formGroupName="personalInfo" class="grid-form">
+        <div class="field">
+          <label>First Name</label>
+          <input formControlName="firstName" type="text" [class.invalid]="form.get('personalInfo.firstName')?.touched && form.get('personalInfo.firstName')?.invalid" />
+          @if (form.get('personalInfo.firstName')?.touched && form.get('personalInfo.firstName')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.firstName')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Middle Name</label>
+          <input formControlName="middleName" type="text" placeholder="Optional" />
+        </div>
+
+        <div class="field">
+          <label>Last Name</label>
+          <input formControlName="lastName" type="text" [class.invalid]="form.get('personalInfo.lastName')?.touched && form.get('personalInfo.lastName')?.invalid" />
+          @if (form.get('personalInfo.lastName')?.touched && form.get('personalInfo.lastName')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.lastName')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input formControlName="email" type="email" [class.invalid]="form.get('personalInfo.email')?.touched && form.get('personalInfo.email')?.invalid" />
+          @if (form.get('personalInfo.email')?.touched && form.get('personalInfo.email')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.email')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Phone Number</label>
+          <input formControlName="phoneNumber" type="tel" [class.invalid]="form.get('personalInfo.phoneNumber')?.touched && form.get('personalInfo.phoneNumber')?.invalid" />
+          @if (form.get('personalInfo.phoneNumber')?.touched && form.get('personalInfo.phoneNumber')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.phoneNumber')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Date of Birth</label>
+          <input formControlName="dateOfBirth" type="date" [class.invalid]="form.get('personalInfo.dateOfBirth')?.touched && form.get('personalInfo.dateOfBirth')?.invalid" />
+          @if (form.get('personalInfo.dateOfBirth')?.touched && form.get('personalInfo.dateOfBirth')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.dateOfBirth')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Gender</label>
+          <select formControlName="gender" [class.invalid]="form.get('personalInfo.gender')?.touched && form.get('personalInfo.gender')?.invalid">
+            @for (gender of genders; track gender) {
+              <option [value]="gender">{{ gender }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field field-span-2">
+          <label>Profile Picture</label>
+          <input type="file" accept="image/png,image/jpeg,image/webp" (change)="onProfilePictureSelected($event)" [class.invalid]="form.get('personalInfo.profilePicture')?.touched && form.get('personalInfo.profilePicture')?.invalid" />
+          @if (form.get('personalInfo.profilePicture')?.touched && form.get('personalInfo.profilePicture')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.profilePicture')) }}</small>
+          }
+        </div>
+
+        <div class="field field-span-2">
+          <label>Address</label>
+          <textarea formControlName="address" rows="3" [class.invalid]="form.get('personalInfo.address')?.touched && form.get('personalInfo.address')?.invalid"></textarea>
+          @if (form.get('personalInfo.address')?.touched && form.get('personalInfo.address')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.address')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Country</label>
+          <select formControlName="country" [class.invalid]="form.get('personalInfo.country')?.touched && form.get('personalInfo.country')?.invalid">
+            @for (country of countries; track country) {
+              <option [value]="country">{{ country }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label>State</label>
+          <select formControlName="state" [class.invalid]="form.get('personalInfo.state')?.touched && form.get('personalInfo.state')?.invalid">
+            <option value="">Select state</option>
+            @for (state of stateOptions(); track state) {
+              <option [value]="state">{{ state }}</option>
+            }
+          </select>
+          @if (form.get('personalInfo.state')?.touched && form.get('personalInfo.state')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.state')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>City</label>
+          <input formControlName="city" type="text" [class.invalid]="form.get('personalInfo.city')?.touched && form.get('personalInfo.city')?.invalid" />
+          @if (form.get('personalInfo.city')?.touched && form.get('personalInfo.city')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.city')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>PIN Code</label>
+          <input formControlName="pinCode" type="text" [class.invalid]="form.get('personalInfo.pinCode')?.touched && form.get('personalInfo.pinCode')?.invalid" />
+          @if (form.get('personalInfo.pinCode')?.touched && form.get('personalInfo.pinCode')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('personalInfo.pinCode')) }}</small>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <h2>Professional Information</h2>
+        <span>Async validator + numeric validation + conditional required fields</span>
+      </div>
+
+      <div formGroupName="professionalInfo" class="grid-form">
+        <div class="field">
+          <label>Employee ID</label>
+          <input formControlName="employeeId" type="text" placeholder="EMP-1024" [class.invalid]="form.get('professionalInfo.employeeId')?.touched && form.get('professionalInfo.employeeId')?.invalid" />
+          @if (form.get('professionalInfo.employeeId')?.touched && form.get('professionalInfo.employeeId')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('professionalInfo.employeeId')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Department</label>
+          <select formControlName="department" [class.invalid]="form.get('professionalInfo.department')?.touched && form.get('professionalInfo.department')?.invalid">
+            @for (department of departments; track department) {
+              <option [value]="department">{{ department }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Designation</label>
+          <input formControlName="designation" type="text" [class.invalid]="form.get('professionalInfo.designation')?.touched && form.get('professionalInfo.designation')?.invalid" />
+        </div>
+
+        <div class="field">
+          <label>Joining Date</label>
+          <input formControlName="joiningDate" type="date" [class.invalid]="form.get('professionalInfo.joiningDate')?.touched && form.get('professionalInfo.joiningDate')?.invalid" />
+        </div>
+
+        <div class="field">
+          <label>Employment Type</label>
+          <select formControlName="employmentType" [class.invalid]="form.get('professionalInfo.employmentType')?.touched && form.get('professionalInfo.employmentType')?.invalid">
+            @for (type of employmentTypes; track type) {
+              <option [value]="type">{{ type }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Work Location</label>
+          <select formControlName="workLocation" [class.invalid]="form.get('professionalInfo.workLocation')?.touched && form.get('professionalInfo.workLocation')?.invalid">
+            @for (location of workLocations; track location) {
+              <option [value]="location">{{ location }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Reporting Manager</label>
+          <input formControlName="reportingManager" type="text" [class.invalid]="form.get('professionalInfo.reportingManager')?.touched && form.get('professionalInfo.reportingManager')?.invalid" />
+        </div>
+
+        <div class="field">
+          <label>Salary</label>
+          <input formControlName="salary" type="number" min="150000" [class.invalid]="form.get('professionalInfo.salary')?.touched && form.get('professionalInfo.salary')?.invalid" />
+        </div>
+
+        <div class="field">
+          <label>Years of Experience</label>
+          <input formControlName="yearsOfExperience" type="number" min="0" [class.invalid]="form.get('professionalInfo.yearsOfExperience')?.touched && form.get('professionalInfo.yearsOfExperience')?.invalid" />
+        </div>
+
+        @if (form.get('professionalInfo.employmentType')?.value === 'Contract') {
+          <div class="field">
+            <label>Contract End Date</label>
+            <input formControlName="contractEndDate" type="date" [class.invalid]="form.get('professionalInfo.contractEndDate')?.touched && form.get('professionalInfo.contractEndDate')?.invalid" />
+            @if (form.get('professionalInfo.contractEndDate')?.touched && form.get('professionalInfo.contractEndDate')?.invalid) {
+              <small class="error">{{ getSummaryText(form.get('professionalInfo.contractEndDate')) }}</small>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <h2>Education Details</h2>
+        <span>FormArray + Dynamic validation</span>
+      </div>
+
+      <div formArrayName="educationDetails" class="stacked-array">
+        @for (education of educationDetails.controls; track education; let i = $index) {
+          <div [formGroupName]="i" class="array-card">
+            <div class="array-header">
+              <strong>Education {{ i + 1 }}</strong>
+              @if (educationDetails.length > 1) {
+                <button type="button" class="remove-button" (click)="removeEducation(i)">Remove</button>
+              }
+            </div>
+
+            <div class="grid-form">
+              <div class="field">
+                <label>Qualification</label>
+                <input formControlName="qualification" type="text" />
+              </div>
+              <div class="field">
+                <label>University</label>
+                <input formControlName="university" type="text" />
+              </div>
+              <div class="field">
+                <label>Passing Year</label>
+                <input formControlName="passingYear" type="number" />
+              </div>
+              <div class="field">
+                <label>Percentage</label>
+                <input formControlName="percentage" type="number" />
+              </div>
+              <div class="field">
+                <label>Grade</label>
+                <input formControlName="grade" type="text" />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="secondary-button" (click)="addEducation()">Add education</button>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <h2>Work Experience</h2>
+        <span>Cross-field validation + date-range validation</span>
+      </div>
+
+      <div formArrayName="workExperience" class="stacked-array">
+        @for (experience of workExperience.controls; track experience; let i = $index) {
+          <div [formGroupName]="i" class="array-card">
+            <div class="array-header">
+              <strong>Experience {{ i + 1 }}</strong>
+              @if (workExperience.length > 1) {
+                <button type="button" class="remove-button" (click)="removeWorkExperience(i)">Remove</button>
+              }
+            </div>
+
+            <div class="grid-form">
+              <div class="field">
+                <label>Company Name</label>
+                <input formControlName="companyName" type="text" />
+              </div>
+              <div class="field">
+                <label>Job Title</label>
+                <input formControlName="jobTitle" type="text" />
+              </div>
+              <div class="field">
+                <label>Start Date</label>
+                <input formControlName="startDate" type="date" />
+              </div>
+              <div class="field">
+                <label>End Date</label>
+                <input formControlName="endDate" type="date" />
+              </div>
+              <div class="field checkbox-field">
+                <label>Currently Working</label>
+                <input formControlName="currentlyWorking" type="checkbox" />
+              </div>
+              <div class="field field-span-2">
+                <label>Responsibilities</label>
+                <textarea formControlName="responsibilities" rows="2"></textarea>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="secondary-button" (click)="addWorkExperience()">Add experience</button>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <h2>Skills</h2>
+        <span>Dynamic FormArray + duplicate validation</span>
+      </div>
+
+      <div formArrayName="skills" class="stacked-array">
+        @for (skill of skills.controls; track skill; let i = $index) {
+          <div [formGroupName]="i" class="array-card">
+            <div class="array-header">
+              <strong>Skill {{ i + 1 }}</strong>
+              @if (skills.length > 1) {
+                <button type="button" class="remove-button" (click)="removeSkill(i)">Remove</button>
+              }
+            </div>
+
+            <div class="grid-form">
+              <div class="field">
+                <label>Skill Name</label>
+                <input formControlName="skillName" type="text" />
+                @if (skill.get('skillName')?.touched && skill.get('skillName')?.invalid) {
+                  <small class="error">{{ getSummaryText(skill.get('skillName')) }}</small>
+                }
+              </div>
+              <div class="field">
+                <label>Experience Level</label>
+                <select formControlName="experienceLevel">
+                  @for (level of skillLevels; track level) {
+                    <option [value]="level">{{ level }}</option>
+                  }
+                </select>
+              </div>
+              <div class="field">
+                <label>Years of Experience</label>
+                <input formControlName="yearsOfExperience" type="number" min="1" />
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="secondary-button" (click)="addSkill()">Add skill</button>
+    </section>
+
+    <section class="panel">
+      <div class="section-header">
+        <h2>Account Information</h2>
+        <span>Cross-field validation + checkbox validation</span>
+      </div>
+
+      <div formGroupName="accountInformation" class="grid-form">
+        <div class="field">
+          <label>Username</label>
+          <input formControlName="username" type="text" [class.invalid]="form.get('accountInformation.username')?.touched && form.get('accountInformation.username')?.invalid" />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input formControlName="password" type="password" [class.invalid]="form.get('accountInformation.password')?.touched && form.get('accountInformation.password')?.invalid" />
+          @if (form.get('accountInformation.password')?.touched && form.get('accountInformation.password')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('accountInformation.password')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Confirm Password</label>
+          <input formControlName="confirmPassword" type="password" [class.invalid]="form.get('accountInformation.confirmPassword')?.touched && form.get('accountInformation.confirmPassword')?.invalid" />
+          @if (form.get('accountInformation.confirmPassword')?.touched && form.get('accountInformation.confirmPassword')?.invalid) {
+            <small class="error">{{ getSummaryText(form.get('accountInformation.confirmPassword')) }}</small>
+          }
+        </div>
+
+        <div class="field">
+          <label>Account Status</label>
+          <select formControlName="accountStatus">
+            @for (status of accountStatuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field checkbox-field field-span-2">
+          <label>
+            <input formControlName="termsAndConditions" type="checkbox" />
+            I agree to the terms and conditions.
+          </label>
+          @if (form.get('accountInformation.termsAndConditions')?.touched && form.get('accountInformation.termsAndConditions')?.invalid) {
+            <small class="error">You must accept the terms and conditions.</small>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="panel api-panel">
+      <div class="section-header">
+        <h2>Reactive Forms API Reference</h2>
+        <span>Where each Angular Reactive Forms API is used and why</span>
+      </div>
+
+      <div class="api-grid">
+        <div class="api-item"><strong>FormControl</strong><span>Used for single-value fields like firstName, email, and password.</span></div>
+        <div class="api-item"><strong>FormGroup</strong><span>Used to group personalInfo, professionalInfo, and accountInformation.</span></div>
+        <div class="api-item"><strong>FormArray</strong><span>Used for educationDetails, workExperience, and skills.</span></div>
+        <div class="api-item"><strong>FormBuilder</strong><span>Creates the full nested form tree with minimal boilerplate.</span></div>
+        <div class="api-item"><strong>NonNullableFormBuilder</strong><span>Used in the non-nullable demo form for strict-typed primitive values.</span></div>
+        <div class="api-item"><strong>ReactiveFormsModule</strong><span>Provides directives such as formControlName, formGroupName, and formArrayName.</span></div>
+        <div class="api-item"><strong>Typed Reactive Forms</strong><span>This form uses strongly typed controls and groups to keep values safe.</span></div>
+        <div class="api-item"><strong>AbstractControl</strong><span>Used in custom validators and central validation messages.</span></div>
+        <div class="api-item"><strong>FormControlName</strong><span>Applied to all inputs to bind DOM elements to form controls.</span></div>
+        <div class="api-item"><strong>FormGroupName</strong><span>Used to group logical sections like personal and professional information.</span></div>
+        <div class="api-item"><strong>FormArrayName</strong><span>Used for dynamic sections that can add or remove records.</span></div>
+        <div class="api-item"><strong>FormControlDirective</strong><span>Under the hood, each input binds to a form control via Angular directives.</span></div>
+      </div>
+    </section>
+
+    <section class="panel state-panel">
+      <div class="section-header">
+        <h2>Form State Management</h2>
+        <span>valid, invalid, pending, pristine, dirty, touched, submitted</span>
+      </div>
+
+      <div class="state-grid">
+        <div class="state-pill"><span>valid</span><strong>{{ form.valid }}</strong></div>
+        <div class="state-pill"><span>invalid</span><strong>{{ form.invalid }}</strong></div>
+        <div class="state-pill"><span>pending</span><strong>{{ form.pending }}</strong></div>
+        <div class="state-pill"><span>disabled</span><strong>{{ form.disabled }}</strong></div>
+        <div class="state-pill"><span>enabled</span><strong>{{ form.enabled }}</strong></div>
+        <div class="state-pill"><span>pristine</span><strong>{{ form.pristine }}</strong></div>
+        <div class="state-pill"><span>dirty</span><strong>{{ form.dirty }}</strong></div>
+        <div class="state-pill"><span>touched</span><strong>{{ form.touched }}</strong></div>
+        <div class="state-pill"><span>untouched</span><strong>{{ form.untouched }}</strong></div>
+        <div class="state-pill"><span>submitted</span><strong>{{ submitted() }}</strong></div>
+      </div>
+
+      <div class="notes">
+        <p><strong>dirty vs touched:</strong> Dirty means the user changed the value. Touched means the user interacted with the control and then moved away.</p>
+        <p><strong>pristine vs untouched:</strong> Pristine means no changes have been made. Untouched means the control has not been focused.</p>
+        <p><strong>valid vs pending:</strong> Valid means all validation checks passed. Pending means an async validator is still running.</p>
+      </div>
+    </section>
+
+    @if (formSaved()) {
+      <div class="success-banner">
+        Employee record saved successfully. The form has been reset and is ready for the next employee.
+      </div>
+    }
+  </form>
+</div>

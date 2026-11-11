@@ -68,6 +68,20 @@
           </span>
         </a>
 
+        <a
+          routerLink="/employees"
+          class="flex items-center justify-between px-3 py-2 rounded-xl text-sm font-semibold transition text-left"
+          [class]="router.url.includes('/employees')
+            ? 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
+            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white'"
+        >
+          <div class="flex items-center gap-3">
+            <app-icon name="users" [size]="18" />
+            <span>Employees</span>
+          </div>
+          <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">HR</span>
+        </a>
+
         <!-- All Tasks -->
         <button
           (click)="selectNav('ALL')"
